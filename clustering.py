@@ -76,11 +76,18 @@ model1 = KMeans(n_clusters = 3, random_state = 0)
 model1.fit(data_train)
 print("Labels after clustering with k-means:", model1.predict(data_train), "\n")
 
-from sklearn.mixture import GaussianMixture
+from sklearn.cluster import DBSCAN
 
-model2 = GaussianMixture(n_components = 3, random_state = 0)
-model2.fit(data_train)
-print("Labels after clustering with GM:", model2.predict(data_train), "\n")
+model2 = DBSCAN(eps = 0.5, min_samples = 5, metric = "euclidean", n_jobs = -1)
+model2.fit(data_train) # Note that these hyperparameters do no yield very good results ...
+
+# DBSCAN has no predicz method. Thus, use another classifier.
+from sklearn.neighbors import KNeighborsClassifier
+
+clf1 = KNeighborsClassifier(n_neighbors = 10)
+clf1.fit(data_train, model2.labels_)
+
+print("Labels after clustering with DBSCAN and classification with KNN:", clf1.predict(data_train), "\n")
 
 # ------------------------------------------------------------------------------
 # Model tuning.
@@ -146,8 +153,8 @@ ax.scatter(data_train_reduced[:, 0], data_train_reduced[:, 1], c = model1.predic
 ax.set_title("Clustering of k-means reduced to 2 dimensions via PCA.")
 fig.show()
 
-# Plot results of GM.
+# Plot results of DBSCAN.
 fig, ax = plt.subplots()
-ax.scatter(data_train_reduced[:, 0], data_train_reduced[:, 1], c = model2.predict(data_train))
-ax.set_title("Clustering of GM reduced to 2 dimensions via PCA.")
+ax.scatter(data_train_reduced[:, 0], data_train_reduced[:, 1], c = clf1.predict(data_train))
+ax.set_title("Clustering of DBSCAN reduced to 2 dimensions via PCA.")
 fig.show()
