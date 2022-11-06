@@ -18,7 +18,11 @@ Regression with linear regression and random forests using the California housin
 
 ## Clustering
 
-Clustering with k-means and Gaussian mixture models using the Iris data set as example.
+Clustering with k-means and DBSCAN using the Iris data set as example.
+
+## Anomaly detection
+
+Anomaly detection with Gaussian mixture models using the breast cancer Wisconsin data set data set as example.
 
 ## Still missing
 
