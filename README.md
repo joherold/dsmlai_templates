@@ -12,7 +12,7 @@ Their main purpose is to obtain more hands-on experience with these tools in ord
 
 ### Binary classification
 
-Binary classification with random forests and gradient boosting using the titanic data set as example.
+Binary classification with random forests and gradient boosting using the Titanic data set as example.
 
 ### Multiclass classification
 
@@ -37,7 +37,8 @@ Anomaly detection with Gaussian mixture models, PCA, and isolation forest using 
 * CNNs, e.g., for computer vision tasks
 * RNNs or transformers, e.g., for NLP tasks
 * Autoencoders, e.g., for representation learning
-* GANs, e.g., for generative learning
+* GANs or diffusion models, e.g., for generative learning
 * Reinforcement learning
+* Non-euclidean domains, e.g., graphs
 * Combining mechanistic and data-driven models such as in PINNs
 * Everything else ...
