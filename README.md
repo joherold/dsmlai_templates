@@ -33,8 +33,11 @@ Anomaly detection with Gaussian mixture models, PCA, and isolation forest using 
 ## Still missing
 
 * Pipelines
-* SVMs
-* Other deep architectures such as CNNs, GNNs, transformers, etc.
+* SVMs, e.g., for classification or regression
+* CNNs, e.g., for computer vision tasks
+* RNNs or transformers, e.g., for NLP tasks
+* Autoencoders, e.g., for representation learning
+* GANs, e.g., for generative learning
 * Reinforcement learning
 * Combining mechanistic and data-driven models such as in PINNs
 * Everything else ...
