@@ -6,11 +6,17 @@ This repository contains some templates for different data science, machine lear
 
 These templates are work in progress and build on Aurélien Géron's "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" < https://www.google.de/books/edition/Hands_On_Machine_Learning_with_Scikit_Le/HnetDwAAQBAJ >, Andrew Ng's courses on Coursera < https://www.coursera.org/ >, or the documentations of the respective packages.
 
-Their main purpose is to obtain more hands-on experience with these tools in order to complement the predominantly theoretical knowledge about them.
+Their main purpose is to obtain more hands-on experience with these tools in order to complement my predominantly theoretical knowledge about them. None of this is tuned for performance.
 
 ## Classification
 
-Classification with random forests and gradient boosting using the titanic data set as example.
+### Binary classification
+
+Binary classification with random forests and gradient boosting using the titanic data set as example.
+
+### Multiclass classification
+
+Multiclass classification with neural networks using the MNIST data set as example.
 
 ## Regression
 
@@ -27,8 +33,8 @@ Anomaly detection with Gaussian mixture models, PCA, and isolation forest using 
 ## Still missing
 
 * Pipelines
-* TensorFlow and Keras
-* Deep architectures such as neural networks, transformers, etc.
+* SVMs
+* Other deep architectures such as CNNs, GNNs, transformers, etc.
 * Reinforcement learning
 * Combining mechanistic and data-driven models such as in PINNs
-* ... and a lot more
+* Everything else ...
