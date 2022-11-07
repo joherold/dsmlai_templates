@@ -22,7 +22,7 @@ Clustering with k-means and DBSCAN using the Iris data set as example.
 
 ## Anomaly detection
 
-Anomaly detection with Gaussian mixture models using the breast cancer Wisconsin data set as example.
+Anomaly detection with Gaussian mixture models, PCA, and isolation forest using the breast cancer Wisconsin data set as example.
 
 ## Still missing
 

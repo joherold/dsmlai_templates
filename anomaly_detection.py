@@ -66,28 +66,46 @@ data_train[:] = scaler1.fit_transform(data_train)
 
 from sklearn.mixture import GaussianMixture
 
-model1 = GaussianMixture(n_components = 3, random_state = 0)
+model1 = GaussianMixture(n_components = 1, random_state = 0)
 model1.fit(data_train)
 
-# ------------------------------------------------------------------------------
-# Compute the q-the percentile.
-
-q = 1
-densities = model1.score_samples(data_train)
-threshold = np.percentile(densities, q)
-anomalies = data_train[densities < threshold]
-print(f"{anomalies.shape[0]} anomalies identified: \n", anomalies)
-idx = anomalies.index.to_numpy()
-
-# Plot the outliers.
 from sklearn.decomposition import PCA
 
-pca = PCA(n_components = 2)
-pca.fit(data_train)
-data_train_reduced = pca.transform(data_train)
+model2 = PCA(n_components = 0.99, random_state = 0) # Retain 99% of variance.
+model2.fit(data_train)
 
-fig, ax = plt.subplots()
-ax.scatter(data_train_reduced[:, 0], data_train_reduced[:, 1], marker = "o")
-ax.scatter(data_train_reduced[idx, 0], data_train_reduced[idx, 1], marker = "o")
-ax.set_title("Data set reduced to 2 dimensions via PCA showing the computed anomalies.")
-fig.show()
+from sklearn.ensemble import IsolationForest
+
+model3 = IsolationForest(random_state = 0)
+model3.fit(data_train)
+
+# ------------------------------------------------------------------------------
+# Identify outliers via fitted models.
+
+# Compute the q-the percentile for GM.
+q1 = 2.0
+densities = model1.score_samples(data_train)
+threshold1 = np.percentile(densities, q1)
+anomalies1 = data_train[densities < threshold1]
+idx1 = anomalies1.index.to_numpy()
+print(f"{anomalies1.shape[0]} anomalies identified via GM: \n", anomalies1)
+print(f"Indices of the anomalies identified via GM: \n", np.sort(idx1), "\n")
+
+# Compute the reconstruction error for PCA.
+q2 = 98.0
+data_train_reconstructed = model2.inverse_transform(model2.transform(data_train))
+reconstruction_error = np.square(data_train - data_train_reconstructed).sum(axis = 1)
+threshold2 = np.percentile(reconstruction_error, q2)
+anomalies2 = data_train[reconstruction_error > threshold2]
+idx2 = anomalies2.index.to_numpy()
+print(f"{anomalies2.shape[0]} anomalies identified via PCA: \n", anomalies2)
+print(f"Indices of the anomalies identified via PCA: \n", np.sort(idx2), "\n")
+
+# Compute the anomaly scores for the isolation forest.
+q3 = 2.0
+anomaly_scores = model3.score_samples(data_train)
+threshold3 = np.percentile(anomaly_scores, q3)
+anomalies3 = data_train[anomaly_scores < threshold3]
+idx3 = anomalies3.index.to_numpy()
+print(f"{anomalies2.shape[0]} anomalies identified via isolation forest: \n", anomalies2)
+print(f"Indices of the anomalies identified via isolation forest: \n", np.sort(idx3), "\n")
