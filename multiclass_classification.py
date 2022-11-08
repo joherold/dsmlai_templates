@@ -20,8 +20,6 @@ from tensorflow import keras
 # ------------------------------------------------------------------------------
 # Load data and do some exploration.
 
-from sklearn.datasets import load_breast_cancer
-
 # Load dataset locally or from the web.
 (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
 
