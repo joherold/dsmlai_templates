@@ -16,7 +16,7 @@ Binary classification with random forests and gradient boosting using the Titani
 
 ### Multiclass classification
 
-Multiclass classification with neural networks using the MNIST data set as example.
+Multiclass classification with an NN and a CNN using the MNIST data set as example.
 
 ## Regression
 
