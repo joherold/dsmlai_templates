@@ -54,7 +54,7 @@ model1.summary()
 # Measure wall time for training.
 start_time = time.time()
 
-# history1 = model1.fit(x_train, y_train, epochs = 10, validation_split = 0.1, verbose = 1)
+history1 = model1.fit(x_train, y_train, epochs = 10, validation_split = 0.1, verbose = 1)
 
 print(f"Training of the NN took {time.time() - start_time} seconds. \n")
 
