@@ -38,7 +38,6 @@ Anomaly detection with Gaussian mixture models, PCA, and isolation forest using 
 
 * Pipelines
 * SVMs, e.g., for classification or regression
-* Pretrained models and transfer learning, e.g., for computer vision tasks
 * RNNs or transformers, e.g., for NLP tasks
 * Autoencoders, e.g., for representation learning
 * GANs or diffusion models, e.g., for generative learning
