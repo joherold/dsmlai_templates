@@ -32,17 +32,17 @@ Clustering with k-means and DBSCAN using the Iris data set as example.
 
 ## Anomaly detection
 
-Anomaly detection with Gaussian mixture models, PCA, and isolation forest using the breast cancer Wisconsin data set as example.
+Anomaly detection with Gaussian mixture models, PCA, and isolation forests using the breast cancer Wisconsin data set as example.
 
 ## Sequential data
 
-Forecasting sequential data with RNNs using data generated via the Lotka-Volterra ODE as example.
+Forecasting sequential data with RNNs and LSTMs using data generated via the Lotka-Volterra ODE as example.
 
 ## Still missing
 
 * Pipelines
 * SVMs, e.g., for classification or regression
-* RNNs or transformers, e.g., for NLP tasks
+* Transformers, e.g., for NLP tasks
 * Autoencoders, e.g., for representation learning
 * GANs or diffusion models, e.g., for generative learning
 * Reinforcement learning

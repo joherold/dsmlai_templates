@@ -2,7 +2,7 @@
 
 '''
 
-Forecasting sequential data with RNNs using data generated via the Lotka-Volterra ODE as example.
+Forecasting sequential data with RNNs and LSTMs using data generated via the Lotka-Volterra ODE as example.
 
 '''
 
@@ -24,7 +24,7 @@ from tensorflow import keras
 from scipy.integrate import ode
 
 # Set number of time series to generate the data set from.
-NM = 1000
+NM = 500
 
 # Set time grid for evalution.
 t0 = 0.0
@@ -105,27 +105,52 @@ model1 = keras.models.Sequential([
     keras.layers.Dense(NF)
 ])
 
-# Print summary.
-model1.summary()
+# Build a simple LSTM.
+model2 = keras.models.Sequential([
+    keras.layers.LSTM(10, return_sequences = True, input_shape = [None, 1]),
+    keras.layers.LSTM(10),
+    keras.layers.Dense(NF)
+])
 
-# Train the model.
+# Print summaries.
+model1.summary()
+model2.summary()
+
+# Train the models.
 optimizer1 = keras.optimizers.Adam(learning_rate = 0.001)
 model1.compile(loss = "mean_squared_error", optimizer = optimizer1)
-model1.fit(x = x_train, y = y_train, epochs = 20, validation_data = (x_valid, y_valid))
+model1.fit(x = x_train, y = y_train, epochs = 10, validation_data = (x_valid, y_valid))
+
+optimizer2 = keras.optimizers.Adam(learning_rate = 0.001)
+model2.compile(loss = "mean_squared_error", optimizer = optimizer1)
+model2.fit(x = x_train, y = y_train, epochs = 10, validation_data = (x_valid, y_valid))
 
 # ------------------------------------------------------------------------------
 # Evaluate results on the test set.
 
 print("Performance of the RNN on the test set:", model1.evaluate(x_test, y_test))
-predictions = model1.predict(x_test)
+print("Performance of the LSTM on the test set:", model2.evaluate(x_test, y_test))
+predictions1 = model1.predict(x_test)
+predictions2 = model2.predict(x_test)
 
-# Plot results.
+# Plot results for RNN.
 fig, ax = plt.subplots()
 ax.plot(ts[NH:], xs[0, NH:, 0], marker = "")
 ax.plot(ts[NH:], xs[0, NH:, 1], marker = "")
 ax.plot(ts[NH:], xs_noise[0, NH:, 0], marker = "o")
 ax.plot(ts[NH:], xs_noise[0, NH:, 1], marker = "o")
-ax.errorbar(ts[NH:], predictions[0, :], marker = "x", markersize = 10)
-ax.set_title("Prediction for sample 0.")
+ax.errorbar(ts[NH:], predictions1[0, :], marker = "x", markersize = 10)
+ax.set_title("Prediction of the RNN for sample 0.")
+ax.legend(["x_0 = x_prey", "x_1 = x_predators", "x_0 with noise", "x_1 with noise","predictions for x_0"])
+fig.show()
+
+# Plot results for LSTM network.
+fig, ax = plt.subplots()
+ax.plot(ts[NH:], xs[0, NH:, 0], marker = "")
+ax.plot(ts[NH:], xs[0, NH:, 1], marker = "")
+ax.plot(ts[NH:], xs_noise[0, NH:, 0], marker = "o")
+ax.plot(ts[NH:], xs_noise[0, NH:, 1], marker = "o")
+ax.errorbar(ts[NH:], predictions2[0, :], marker = "x", markersize = 10)
+ax.set_title("Prediction of the LSTM for sample 0.")
 ax.legend(["x_0 = x_prey", "x_1 = x_predators", "x_0 with noise", "x_1 with noise","predictions for x_0"])
 fig.show()
