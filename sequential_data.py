@@ -2,7 +2,7 @@
 
 '''
 
-Forecasting sequential data with RNNs and LSTMs using data generated via the Lotka-Volterra ODE as example.
+Forecasting sequential data with RNNs and GRUs using data generated via the Lotka-Volterra ODE as example.
 
 '''
 
@@ -76,10 +76,10 @@ xs_noise = xs + sigma * np.random.randn(xs.shape[0], xs.shape[1], xs.shape[2])
 
 # Plot results.
 fig, ax = plt.subplots()
+# ax.plot(ts, xs_noise[0, :, 0], marker = "o")
+# ax.plot(ts, xs_noise[0, :, 1], marker = "o")
 ax.plot(ts, xs[0, :, 0], marker = "")
 ax.plot(ts, xs[0, :, 1], marker = "")
-ax.plot(ts, xs_noise[0, :, 0], marker = "o")
-ax.plot(ts, xs_noise[0, :, 1], marker = "o")
 ax.set_title("Exemplary solution of the ODE")
 ax.legend(["x_0 = x_prey", "x_1 = x_predators", "x_0 with noise", "x_1 with noise"])
 fig.show()
@@ -105,10 +105,11 @@ model1 = keras.models.Sequential([
     keras.layers.Dense(NF)
 ])
 
-# Build a simple LSTM.
+# Build a simple GRU.
 model2 = keras.models.Sequential([
-    keras.layers.LSTM(10, return_sequences = True, input_shape = [None, 1]),
-    keras.layers.LSTM(10),
+    keras.layers.Conv1D(filters = 20, kernel_size = 4, strides = 2, padding = "valid", input_shape = [None, 1]),
+    keras.layers.GRU(10, return_sequences = True, input_shape = [None, 1]),
+    keras.layers.GRU(10),
     keras.layers.Dense(NF)
 ])
 
@@ -129,28 +130,28 @@ model2.fit(x = x_train, y = y_train, epochs = 10, validation_data = (x_valid, y_
 # Evaluate results on the test set.
 
 print("Performance of the RNN on the test set:", model1.evaluate(x_test, y_test))
-print("Performance of the LSTM on the test set:", model2.evaluate(x_test, y_test))
+print("Performance of the GRU on the test set:", model2.evaluate(x_test, y_test))
 predictions1 = model1.predict(x_test)
 predictions2 = model2.predict(x_test)
 
 # Plot results for RNN.
 fig, ax = plt.subplots()
-ax.plot(ts[NH:], xs[0, NH:, 0], marker = "")
-ax.plot(ts[NH:], xs[0, NH:, 1], marker = "")
 ax.plot(ts[NH:], xs_noise[0, NH:, 0], marker = "o")
-ax.plot(ts[NH:], xs_noise[0, NH:, 1], marker = "o")
+# ax.plot(ts[NH:], xs_noise[0, NH:, 1], marker = "o")
+ax.plot(ts[NH:], xs[0, NH:, 0], marker = "")
+# ax.plot(ts[NH:], xs[0, NH:, 1], marker = "")
 ax.errorbar(ts[NH:], predictions1[0, :], marker = "x", markersize = 10)
 ax.set_title("Prediction of the RNN for sample 0.")
 ax.legend(["x_0 = x_prey", "x_1 = x_predators", "x_0 with noise", "x_1 with noise","predictions for x_0"])
 fig.show()
 
-# Plot results for LSTM network.
+# Plot results for GRU network.
 fig, ax = plt.subplots()
-ax.plot(ts[NH:], xs[0, NH:, 0], marker = "")
-ax.plot(ts[NH:], xs[0, NH:, 1], marker = "")
 ax.plot(ts[NH:], xs_noise[0, NH:, 0], marker = "o")
-ax.plot(ts[NH:], xs_noise[0, NH:, 1], marker = "o")
+# ax.plot(ts[NH:], xs_noise[0, NH:, 1], marker = "o")
+ax.plot(ts[NH:], xs[0, NH:, 0], marker = "")
+# ax.plot(ts[NH:], xs[0, NH:, 1], marker = "")
 ax.errorbar(ts[NH:], predictions2[0, :], marker = "x", markersize = 10)
-ax.set_title("Prediction of the LSTM for sample 0.")
+ax.set_title("Prediction of the GRU for sample 0.")
 ax.legend(["x_0 = x_prey", "x_1 = x_predators", "x_0 with noise", "x_1 with noise","predictions for x_0"])
 fig.show()
