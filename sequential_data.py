@@ -33,8 +33,6 @@ NTS = 1000
 ts = np.linspace(t0, t1, NTS)
 dt = (t1 - t0) / (NTS - 1)
 
-# Set standard deviation of Gaussian noise.
-sigma = 0.01
 
 # Set parameters for the model.
 p = np.array([0.66, 1.33, 1, 1])
@@ -72,27 +70,30 @@ for m in range(0, NM):
         else:
             xs[m, j + 1, :] = r.y
 
-        # Add some Gaussian noise if desired.
-        xs[m, j, :] = xs[m, j, :] + sigma * np.random.randn()
+# Add some Gaussian noise if desired.
+sigma = 0.25
+xs_noise = xs + sigma * np.random.randn(xs.shape[0], xs.shape[1], xs.shape[2])
 
 # Plot results.
 fig, ax = plt.subplots()
-ax.plot(ts, xs[0, :, 0], marker = "o")
-ax.plot(ts, xs[0, :, 1], marker = "o")
+ax.plot(ts, xs[0, :, 0], marker = "")
+ax.plot(ts, xs[0, :, 1], marker = "")
+ax.plot(ts, xs_noise[0, :, 0], marker = "o")
+ax.plot(ts, xs_noise[0, :, 1], marker = "o")
 ax.set_title("Exemplary solution of the ODE")
-ax.legend(["x_0 = x_prey", "x_1 = x_predators"])
+ax.legend(["x_0 = x_prey", "x_1 = x_predators", "x_0 with noise", "x_1 with noise"])
 fig.show()
 
 # Number of time steps to forecast.
-NF = 10
+NF = 100
 NH = NTS - NF
 
 # Split into training, valdiation, and test set. 70 %, 20 %, and 10%. Trying to forecast x_0 = x_prey for NF time steps.
 b1 = int(NM * 0.7)
 b2 = int(NM * 0.9)
-x_train, y_train = xs[:b1, :NH, 0], xs[:b1, NH:, 0]
-x_valid, y_valid = xs[b1:b2, :NH, 0], xs[b1:b2, NH:, 0]
-x_test, y_test = xs[b2:, :NH, 0], xs[b2:, NH:, 0]
+x_train, y_train = xs_noise[:b1, :NH, 0], xs_noise[:b1, NH:, 0]
+x_valid, y_valid = xs_noise[b1:b2, :NH, 0], xs_noise[b1:b2, NH:, 0]
+x_test, y_test = xs_noise[b2:, :NH, 0], xs_noise[b2:, NH:, 0]
 
 # ------------------------------------------------------------------------------
 # Set up and train models.
@@ -104,10 +105,13 @@ model1 = keras.models.Sequential([
     keras.layers.Dense(NF)
 ])
 
+# Print summary.
+model1.summary()
+
 # Train the model.
 optimizer1 = keras.optimizers.Adam(learning_rate = 0.001)
 model1.compile(loss = "mean_squared_error", optimizer = optimizer1)
-model1.fit(x = x_train, y = y_train, epochs = 10, validation_data = (x_valid, y_valid))
+model1.fit(x = x_train, y = y_train, epochs = 20, validation_data = (x_valid, y_valid))
 
 # ------------------------------------------------------------------------------
 # Evaluate results on the test set.
@@ -117,9 +121,11 @@ predictions = model1.predict(x_test)
 
 # Plot results.
 fig, ax = plt.subplots()
-ax.plot(ts[NH:], xs[0, NH:, 0], marker = "o")
-ax.plot(ts[NH:], xs[0, NH:, 1], marker = "o")
+ax.plot(ts[NH:], xs[0, NH:, 0], marker = "")
+ax.plot(ts[NH:], xs[0, NH:, 1], marker = "")
+ax.plot(ts[NH:], xs_noise[0, NH:, 0], marker = "o")
+ax.plot(ts[NH:], xs_noise[0, NH:, 1], marker = "o")
 ax.errorbar(ts[NH:], predictions[0, :], marker = "x", markersize = 10)
 ax.set_title("Prediction for sample 0.")
-ax.legend(["x_0 = x_prey", "x_1 = x_predators", "predictions for x_0"])
+ax.legend(["x_0 = x_prey", "x_1 = x_predators", "x_0 with noise", "x_1 with noise","predictions for x_0"])
 fig.show()
