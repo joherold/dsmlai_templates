@@ -34,6 +34,10 @@ Clustering with k-means and DBSCAN using the Iris data set as example.
 
 Anomaly detection with Gaussian mixture models, PCA, and isolation forest using the breast cancer Wisconsin data set as example.
 
+## Sequential data
+
+Forecasting sequential data with RNNs using data generated via the Lotka-Volterra ODE as example.
+
 ## Still missing
 
 * Pipelines
@@ -44,4 +48,5 @@ Anomaly detection with Gaussian mixture models, PCA, and isolation forest using 
 * Reinforcement learning
 * Non-euclidean domains, e.g., graphs
 * Combining mechanistic and data-driven models such as in PINNs
+* Neural ODEs
 * Everything else ...
