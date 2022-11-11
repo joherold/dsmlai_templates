@@ -36,7 +36,7 @@ Anomaly detection with Gaussian mixture models, PCA, and isolation forests using
 
 ## Sequential data
 
-Forecasting sequential data with RNNs and LSTMs using data generated via the Lotka-Volterra ODE as example.
+Forecasting sequential data with RNNs and GRUs using data generated via the Lotka-Volterra ODE as example.
 
 ## Still missing
 
