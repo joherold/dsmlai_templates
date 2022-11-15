@@ -38,6 +38,10 @@ Anomaly detection with Gaussian mixture models, PCA, and isolation forests using
 
 Forecasting sequential data with RNNs and GRUs using data generated via the Lotka-Volterra ODE as example.
 
+## Text analysis
+
+Text analysis with GRUs using the IMDB data set as example.
+
 ## Still missing
 
 * Pipelines
