@@ -123,7 +123,7 @@ model1.compile(loss = "mean_squared_error", optimizer = optimizer1)
 model1.fit(x = x_train, y = y_train, epochs = 10, validation_data = (x_valid, y_valid))
 
 optimizer2 = keras.optimizers.Adam(learning_rate = 0.001)
-model2.compile(loss = "mean_squared_error", optimizer = optimizer1)
+model2.compile(loss = "mean_squared_error", optimizer = optimizer2)
 model2.fit(x = x_train, y = y_train, epochs = 10, validation_data = (x_valid, y_valid))
 
 # ------------------------------------------------------------------------------
