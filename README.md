@@ -8,7 +8,7 @@ They build on Aurélien Géron's "Hands-On Machine Learning with Scikit-Learn, K
 
 These templates are at a very early stage and will be added to or updated over time. Their main purpose is to obtain more hands-on experience with these tools in order to complement my predominantly theoretical knowledge about them. None of this is tuned for performance.
 
-## Classification
+## Templates
 
 ### Binary classification
 
@@ -18,27 +18,27 @@ Binary classification with random forests and gradient boosting using the Titani
 
 Multiclass classification with an NN and a CNN using the MNIST data set as example.
 
+### Regression
+
+Regression with linear regression and random forests using the California housing prices data set as example.
+
+### Clustering
+
+Clustering with k-means and DBSCAN using the Iris data set as example.
+
+### Anomaly detection
+
+Anomaly detection with Gaussian mixture models, PCA, and isolation forests using the breast cancer Wisconsin data set as example.
+
 ### Pretrained models
 
 Using pretrained models and transfer learning for classification with the flowers data set as example.
 
-## Regression
-
-Regression with linear regression and random forests using the California housing prices data set as example.
-
-## Clustering
-
-Clustering with k-means and DBSCAN using the Iris data set as example.
-
-## Anomaly detection
-
-Anomaly detection with Gaussian mixture models, PCA, and isolation forests using the breast cancer Wisconsin data set as example.
-
-## Sequential data
+### Sequential data
 
 Forecasting sequential data with RNNs and GRUs using data generated via the Lotka-Volterra ODE as example.
 
-## Text analysis
+### Text analysis
 
 Text analysis with GRUs using the IMDB data set as example.
 
