@@ -38,8 +38,10 @@ y_train = y_train[-n_validation:]
 # Set up and train models.
 
 # Build an autoencoder.
+std_noise = 0.2
 encoder = keras.models.Sequential([
     keras.layers.Flatten(input_shape = [28, 28]),
+    keras.layers.GaussianNoise(stddev = std_noise),
     keras.layers.Dense(100, activation = "selu"),
     keras.layers.Dense(30, activation = "selu")
 ])
@@ -63,14 +65,15 @@ history1 = autoencoder.fit(x = x_train, y = x_train, validation_data = [x_valid,
 print(f"Training of the autoencoder took {time.time() - start_time} seconds. \n")
 
 # ------------------------------------------------------------------------------
-# Evaluate results by plotting some reconstructions.
+# Evaluate results by plotting some reconstructions of noisy images.
 n_images = 10
-reconstructions = autoencoder.predict(x_test[:n_images])
+noisy_images = x_test[:n_images] + np.random.randn(10, 28, 28) * std_noise
+noisy_reconstructions = autoencoder.predict(noisy_images)
 
 fig, axs = plt.subplots(2, n_images)
 for i in range(0, n_images):
-    axs[0][i].imshow(x_test[i], cmap = "binary")
-    axs[1][i].imshow(reconstructions[i], cmap = "binary")
+    axs[0][i].imshow(noisy_images[i], cmap = "binary")
+    axs[1][i].imshow(noisy_reconstructions[i], cmap = "binary")
 fig.show()
 
 # Visualize the test set via t-SNE.
