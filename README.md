@@ -42,12 +42,15 @@ Forecasting sequential data with RNNs and GRUs using data generated via the Lotk
 
 Text analysis with GRUs using the IMDB data set as example.
 
+### Representation learning
+
+Representation learning with autoencoders using the Fashion MNIST data set as example.
+
 ## Still missing
 
 * Pipelines
 * SVMs, e.g., for classification or regression
 * Transformers, e.g., for NLP tasks
-* Autoencoders, e.g., for representation learning
 * GANs or diffusion models, e.g., for generative learning
 * Reinforcement learning
 * Non-euclidean domains, e.g., graphs
